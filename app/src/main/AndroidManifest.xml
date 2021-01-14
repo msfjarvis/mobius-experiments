@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobiusDemo">
 
-        <activity android:name=".ui.EmptyActivity">
+        <activity android:name="dev.msfjarvis.counter.CounterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

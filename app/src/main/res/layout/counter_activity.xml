@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/counter_textview"
+        android:textAppearance="?attr/textAppearanceHeadline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/error_textview"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:visibility="visible"
+        tools:text="Failed to decrement"
+        />
+
+    <Button
+        android:id="@+id/decrement_button"
+        android:text="Decrement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/increment_button"
+        android:text="Increment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
