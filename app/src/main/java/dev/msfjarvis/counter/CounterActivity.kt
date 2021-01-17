@@ -7,7 +7,7 @@ import com.spotify.mobius.Connection
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.android.MobiusAndroid
 import dev.msfjarvis.mobiusdemo.R
-import kotlinx.android.synthetic.main.counter_activity.*
+import dev.msfjarvis.mobiusdemo.databinding.CounterActivityBinding
 
 class CounterActivity : AppCompatActivity(R.layout.counter_activity) {
     private val loopFactory = Mobius.loop(CounterUpdate(), {
@@ -21,6 +21,7 @@ class CounterActivity : AppCompatActivity(R.layout.counter_activity) {
     })
 
     private val controller = MobiusAndroid.controller(loopFactory, CounterModel.default())
+    private val binding by viewBinding(CounterActivityBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,25 +31,25 @@ class CounterActivity : AppCompatActivity(R.layout.counter_activity) {
         controller.connect { eventConsumer ->
             object : Connection<CounterModel> {
                 override fun dispose() {
-                    increment_button.setOnClickListener(null)
-                    decrement_button.setOnClickListener(null)
+                    binding.incrementButton.setOnClickListener(null)
+                    binding.decrementButton.setOnClickListener(null)
                 }
 
                 override fun accept(value: CounterModel) {
-                    counter_textview.text = "${value.value}"
+                    binding.counterTextview.text = "${value.value}"
 
                     if (value.error != null) {
-                        error_textview.isVisible = true
-                        error_textview.text = "Cannot decrement below zero"
+                        binding.errorTextview.isVisible = true
+                        binding.errorTextview.text = "Cannot decrement below zero"
                     } else {
-                        error_textview.isVisible = false
+                        binding.errorTextview.isVisible = false
                     }
 
-                    increment_button.setOnClickListener {
+                    binding.incrementButton.setOnClickListener {
                         eventConsumer.accept(CounterEvent.Increment)
                     }
 
-                    decrement_button.setOnClickListener {
+                    binding.decrementButton.setOnClickListener {
                         eventConsumer.accept(CounterEvent.Decrement)
                     }
                 }
