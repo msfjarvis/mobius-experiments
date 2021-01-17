@@ -7,6 +7,10 @@ plugins {
 android {
     compileSdkVersion 30
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "dev.msfjarvis.mobiusdemo"
         minSdkVersion 23
