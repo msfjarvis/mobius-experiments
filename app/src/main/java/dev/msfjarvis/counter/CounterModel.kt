@@ -1,7 +1,7 @@
 package dev.msfjarvis.counter
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CounterModel(val value: Int, val error: CounterError?): Parcelable {
