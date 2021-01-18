@@ -40,7 +40,7 @@ class CounterActivity : AppCompatActivity(R.layout.counter_activity) {
 
                     if (value.error != null) {
                         binding.errorTextview.isVisible = true
-                        binding.errorTextview.text = "Cannot decrement below zero"
+                        binding.errorTextview.text = getString(R.string.error_decrement_below_zero)
                     } else {
                         binding.errorTextview.isVisible = false
                     }

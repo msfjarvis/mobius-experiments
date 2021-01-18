@@ -20,18 +20,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:visibility="visible"
-        tools:text="Failed to decrement"
-        />
+        tools:text="Failed to decrement" />
 
     <Button
         android:id="@+id/decrement_button"
-        android:text="Decrement"
+        android:text="@string/decrement_button_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/increment_button"
-        android:text="Increment"
+        android:text="@string/increment_button_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

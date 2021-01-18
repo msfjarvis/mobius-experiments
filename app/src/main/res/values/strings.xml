@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Mobius Demo</string>
+    <string name="decrement_button_label">Decrement</string>
+    <string name="increment_button_label">Increment</string>
+    <string name="error_decrement_below_zero">Cannot decrement below zero</string>
 </resources>
