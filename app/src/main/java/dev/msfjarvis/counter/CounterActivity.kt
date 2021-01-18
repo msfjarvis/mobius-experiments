@@ -9,7 +9,7 @@ import com.spotify.mobius.android.MobiusAndroid
 import dev.msfjarvis.mobiusdemo.R
 import dev.msfjarvis.mobiusdemo.databinding.CounterActivityBinding
 
-class CounterActivity : AppCompatActivity(R.layout.counter_activity) {
+class CounterActivity : AppCompatActivity() {
     private val loopFactory = Mobius.loop(CounterUpdate(), {
         object : Connection<Nothing> {
             override fun dispose() {
@@ -25,6 +25,7 @@ class CounterActivity : AppCompatActivity(R.layout.counter_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         if (savedInstanceState != null) {
             controller.replaceModel(savedInstanceState.getParcelable("model")!!)
         }
