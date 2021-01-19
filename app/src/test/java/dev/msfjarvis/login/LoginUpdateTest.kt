@@ -11,13 +11,13 @@ class LoginUpdateTest {
     private val updateSpec = UpdateSpec(LoginUpdate())
 
     @Test
-    fun `clicking login button sets off login started effect`() {
+    fun `when login button is clicked, then validate credentials`() {
         updateSpec
             .given(initialModel)
             .whenEvent(LoginEvent.LoginButtonClicked)
             .then(assertThatNext(
                 hasModel(initialModel.loginInProgress()),
-                hasEffects(LoginEffects.LoginStarted),
+                hasEffects(LoginEffects.ValidateCredentials),
             ))
     }
 }

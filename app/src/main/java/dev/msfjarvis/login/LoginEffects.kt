@@ -1,5 +1,5 @@
 package dev.msfjarvis.login
 
 sealed class LoginEffects {
-    object LoginStarted : LoginEffects()
+    object ValidateCredentials : LoginEffects()
 }
