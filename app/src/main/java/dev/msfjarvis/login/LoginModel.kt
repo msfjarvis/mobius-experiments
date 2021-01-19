@@ -1,8 +1,8 @@
 package dev.msfjarvis.login
 
 data class LoginModel(
-    val username: String,
-    val password: String,
+    val username: Username,
+    val password: Password,
     val loginInProgress: Boolean,
     val validationErrors: List<ValidationError>,
 ) {
@@ -15,7 +15,7 @@ data class LoginModel(
         return copy(loginInProgress = false, validationErrors = validationErrors)
     }
 
-    fun enteredCredentials(username: String, password: String): LoginModel {
+    fun enteredCredentials(username: Username, password: Password): LoginModel {
         return copy(username = username, password = password)
     }
 
@@ -34,8 +34,8 @@ data class LoginModel(
     companion object {
         fun default(): LoginModel {
             return LoginModel(
-                username = "",
-                password = "",
+                username = Username.BLANK,
+                password = Password.BLANK,
                 loginInProgress = false,
                 validationErrors = emptyList(),
             )

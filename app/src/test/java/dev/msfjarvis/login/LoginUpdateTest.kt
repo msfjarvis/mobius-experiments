@@ -9,6 +9,8 @@ class LoginUpdateTest {
 
     private val initialModel = LoginModel.default()
     private val updateSpec = UpdateSpec(LoginUpdate())
+    private val validUsername = Username("simple")
+    private val validPassword = Password("simple")
 
     @Test
     fun `when login button is clicked, then validate credentials`() {
@@ -25,7 +27,7 @@ class LoginUpdateTest {
     fun `when credential validation fails, then show errors`() {
         val validationErrors = listOf(ValidationError.InvalidPassword)
         val model = initialModel
-            .enteredCredentials(username = "simple", password = "")
+            .enteredCredentials(username = validUsername, password = Password.BLANK)
             .loginInProgress()
 
         updateSpec
@@ -40,7 +42,7 @@ class LoginUpdateTest {
     @Test
     fun `when credential validation succeeds, then call login API`() {
         val model = initialModel
-            .enteredCredentials(username = "simple", password = "simple")
+            .enteredCredentials(username = validUsername, password = validPassword)
             .loginInProgress()
 
         updateSpec
@@ -48,7 +50,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.ValidationSuccess)
             .then(assertThatNext(
                 hasNoModel(),
-                hasEffects(LoginEffects.LoginUser(username = "simple", password = "simple"))
+                hasEffects(LoginEffects.LoginUser(username = validUsername, password = validPassword))
             ))
     }
 
@@ -56,7 +58,7 @@ class LoginUpdateTest {
     fun `when username is entered, then username error is cleared`() {
         val model = initialModel
             .validationFailed(listOf(ValidationError.InvalidPassword, ValidationError.InvalidUsername))
-            .enteredCredentials(username = "simple", password = "")
+            .enteredCredentials(username = validUsername, password = Password.BLANK)
 
         updateSpec
             .given(model)
@@ -71,7 +73,7 @@ class LoginUpdateTest {
     fun `when password is entered, then password error is cleared`() {
         val model = initialModel
             .validationFailed(listOf(ValidationError.InvalidPassword, ValidationError.InvalidUsername))
-            .enteredCredentials(username = "", password = "simple")
+            .enteredCredentials(username = Username.BLANK, password = validPassword)
 
         updateSpec
             .given(model)
@@ -85,7 +87,7 @@ class LoginUpdateTest {
     @Test
     fun `when login succeeds, then save auth token and open profile screen`() {
         val model = initialModel
-            .enteredCredentials(username = "simple", password = "simple")
+            .enteredCredentials(username = validUsername, password = validPassword)
             .loginInProgress()
         val authToken = "auth_token"
 
@@ -101,7 +103,7 @@ class LoginUpdateTest {
     @Test
     fun `when login fails, then show errors`() {
         val model = initialModel
-            .enteredCredentials(username = "simple", password = "simple")
+            .enteredCredentials(username = validUsername, password = validPassword)
             .loginInProgress()
 
         updateSpec
