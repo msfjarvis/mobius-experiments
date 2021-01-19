@@ -10,11 +10,11 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
             LoginEvent.LoginButtonClicked -> {
                 next(model.loginInProgress(), setOf(LoginEffects.ValidateCredentials(model.username, model.password)))
             }
-            is LoginEvent.ValidationFailure -> {
-                next(model.validationFailed(event.errors))
-            }
-            LoginEvent.ValidationSuccess -> {
-                dispatch(setOf(LoginEffects.LoginUser(model.username, model.password)))
+            is LoginEvent.ValidationResult -> {
+                if (event.errors.isEmpty())
+                    dispatch(setOf(LoginEffects.LoginUser(model.username, model.password)))
+                else
+                    next(model.validationFailed(event.errors))
             }
             LoginEvent.UsernameEntered -> {
                 next(model.clearUsernameError())

@@ -32,7 +32,7 @@ class LoginUpdateTest {
 
         updateSpec
             .given(model)
-            .whenEvent(LoginEvent.ValidationFailure(validationErrors))
+            .whenEvent(LoginEvent.ValidationResult(validationErrors))
             .then(assertThatNext(
                 hasModel(model.validationFailed(validationErrors)),
                 hasNoEffects(),
@@ -47,7 +47,7 @@ class LoginUpdateTest {
 
         updateSpec
             .given(model)
-            .whenEvent(LoginEvent.ValidationSuccess)
+            .whenEvent(LoginEvent.ValidationResult(emptyList()))
             .then(assertThatNext(
                 hasNoModel(),
                 hasEffects(LoginEffects.LoginUser(username = validUsername, password = validPassword))
