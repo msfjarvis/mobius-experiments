@@ -14,6 +14,9 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
             is LoginEvent.ValidationFailure -> {
                 next(model.validationFailed(event.errors))
             }
+            LoginEvent.ValidationSuccess -> {
+                dispatch(Effects.effects(LoginEffects.LoginUser(model.username, model.password)))
+            }
         }
     }
 }

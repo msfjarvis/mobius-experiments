@@ -36,4 +36,19 @@ class LoginUpdateTest {
                 hasNoEffects(),
             ))
     }
+
+    @Test
+    fun `when credential validation succeeds, then call login API`() {
+        val model = initialModel
+            .enteredCredentials(username = "simple", password = "simple")
+            .loginInProgress()
+
+        updateSpec
+            .given(model)
+            .whenEvent(LoginEvent.ValidationSuccess)
+            .then(assertThatNext(
+                hasNoModel(),
+                hasEffects(LoginEffects.LoginUser(username = "simple", password = "simple"))
+            ))
+    }
 }
