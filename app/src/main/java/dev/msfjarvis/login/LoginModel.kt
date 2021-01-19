@@ -27,6 +27,10 @@ data class LoginModel(
         return copy(validationErrors = validationErrors - ValidationError.InvalidPassword)
     }
 
+    fun loginCompleted(): LoginModel {
+        return copy(loginInProgress = false)
+    }
+
     companion object {
         fun default(): LoginModel {
             return LoginModel(

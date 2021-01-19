@@ -26,6 +26,9 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
             is LoginEvent.LoginSuccess -> {
                 dispatch(Effects.effects(LoginEffects.SaveAuthToken(event.authToken), LoginEffects.OpenProfileScreen))
             }
+            LoginEvent.LoginFailure -> {
+                next(model.loginCompleted(), Effects.effects(LoginEffects.ShowLoginError))
+            }
         }
     }
 }

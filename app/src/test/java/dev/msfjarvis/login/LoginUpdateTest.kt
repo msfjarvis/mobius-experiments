@@ -97,4 +97,19 @@ class LoginUpdateTest {
                 hasEffects(LoginEffects.SaveAuthToken(authToken), LoginEffects.OpenProfileScreen)
             ))
     }
+
+    @Test
+    fun `when login fails, then show errors`() {
+        val model = initialModel
+            .enteredCredentials(username = "simple", password = "simple")
+            .loginInProgress()
+
+        updateSpec
+            .given(model)
+            .whenEvent(LoginEvent.LoginFailure)
+            .then(assertThatNext(
+                hasModel(model.loginCompleted()),
+                hasEffects(LoginEffects.ShowLoginError)
+            ))
+    }
 }
