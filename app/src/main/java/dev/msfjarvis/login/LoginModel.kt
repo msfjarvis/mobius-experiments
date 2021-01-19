@@ -15,6 +15,10 @@ data class LoginModel(
         return copy(loginInProgress = false, validationErrors = validationErrors)
     }
 
+    fun enteredCredentials(username: String, password: String): LoginModel {
+        return copy(username = username, password = password)
+    }
+
     companion object {
         fun default(): LoginModel {
             return LoginModel(

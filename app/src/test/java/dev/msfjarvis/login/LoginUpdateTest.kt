@@ -24,11 +24,15 @@ class LoginUpdateTest {
     @Test
     fun `when credential validation fails, then show errors`() {
         val validationErrors = listOf(ValidationError.InvalidPassword)
+        val model = initialModel
+            .enteredCredentials(username = "simple", password = "")
+            .loginInProgress()
+
         updateSpec
-            .given(initialModel)
+            .given(model)
             .whenEvent(LoginEvent.ValidationFailure(validationErrors))
             .then(assertThatNext(
-                hasModel(initialModel.validationFailed(validationErrors)),
+                hasModel(model.validationFailed(validationErrors)),
                 hasNoEffects(),
             ))
     }
