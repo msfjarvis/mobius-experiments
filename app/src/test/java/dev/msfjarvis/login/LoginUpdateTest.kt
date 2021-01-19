@@ -20,4 +20,16 @@ class LoginUpdateTest {
                 hasEffects(LoginEffects.ValidateCredentials),
             ))
     }
+
+    @Test
+    fun `when credential validation fails, then show errors`() {
+        val validationErrors = listOf(ValidationError.InvalidPassword)
+        updateSpec
+            .given(initialModel)
+            .whenEvent(LoginEvent.ValidationFailure(validationErrors))
+            .then(assertThatNext(
+                hasModel(initialModel.validationFailed(validationErrors)),
+                hasNoEffects(),
+            ))
+    }
 }
