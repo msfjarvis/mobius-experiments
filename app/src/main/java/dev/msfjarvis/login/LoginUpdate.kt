@@ -17,6 +17,9 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
             LoginEvent.ValidationSuccess -> {
                 dispatch(Effects.effects(LoginEffects.LoginUser(model.username, model.password)))
             }
+            LoginEvent.UsernameEntered -> {
+                next(model.clearUsernameError())
+            }
         }
     }
 }

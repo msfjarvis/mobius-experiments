@@ -51,4 +51,19 @@ class LoginUpdateTest {
                 hasEffects(LoginEffects.LoginUser(username = "simple", password = "simple"))
             ))
     }
+
+    @Test
+    fun `when username is entered, then username error is cleared`() {
+        val model = initialModel
+            .validationFailed(listOf(ValidationError.InvalidPassword, ValidationError.InvalidUsername))
+            .enteredCredentials(username = "simple", password = "")
+
+        updateSpec
+            .given(model)
+            .whenEvent(LoginEvent.UsernameEntered)
+            .then(assertThatNext(
+                hasModel(model.clearUsernameError()),
+                hasNoEffects(),
+            ))
+    }
 }

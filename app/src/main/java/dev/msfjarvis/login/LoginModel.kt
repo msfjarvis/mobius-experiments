@@ -19,6 +19,10 @@ data class LoginModel(
         return copy(username = username, password = password)
     }
 
+    fun clearUsernameError(): LoginModel {
+        return copy(validationErrors = validationErrors - ValidationError.InvalidUsername)
+    }
+
     companion object {
         fun default(): LoginModel {
             return LoginModel(
