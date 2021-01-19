@@ -20,6 +20,9 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
             LoginEvent.UsernameEntered -> {
                 next(model.clearUsernameError())
             }
+            LoginEvent.PasswordEntered -> {
+                next(model.clearPasswordError())
+            }
         }
     }
 }

@@ -66,4 +66,19 @@ class LoginUpdateTest {
                 hasNoEffects(),
             ))
     }
+
+    @Test
+    fun `when password is entered, then password error is cleared`() {
+        val model = initialModel
+            .validationFailed(listOf(ValidationError.InvalidPassword, ValidationError.InvalidUsername))
+            .enteredCredentials(username = "", password = "simple")
+
+        updateSpec
+            .given(model)
+            .whenEvent(LoginEvent.PasswordEntered)
+            .then(assertThatNext(
+                hasModel(model.clearPasswordError()),
+                hasNoEffects(),
+            ))
+    }
 }

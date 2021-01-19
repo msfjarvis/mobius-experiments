@@ -23,6 +23,10 @@ data class LoginModel(
         return copy(validationErrors = validationErrors - ValidationError.InvalidUsername)
     }
 
+    fun clearPasswordError(): LoginModel {
+        return copy(validationErrors = validationErrors - ValidationError.InvalidPassword)
+    }
+
     companion object {
         fun default(): LoginModel {
             return LoginModel(
