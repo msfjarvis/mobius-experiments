@@ -17,7 +17,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.LoginButtonClicked)
             .then(assertThatNext(
                 hasModel(initialModel.loginInProgress()),
-                hasEffects(LoginEffects.ValidateCredentials),
+                hasEffects(LoginEffects.ValidateCredentials(initialModel.username, initialModel.password)),
             ))
     }
 

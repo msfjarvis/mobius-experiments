@@ -8,7 +8,7 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
     override fun update(model: LoginModel, event: LoginEvent): Next<LoginModel, LoginEffects> {
         return when (event) {
             LoginEvent.LoginButtonClicked -> {
-                next(model.loginInProgress(), setOf(LoginEffects.ValidateCredentials))
+                next(model.loginInProgress(), setOf(LoginEffects.ValidateCredentials(model.username, model.password)))
             }
             is LoginEvent.ValidationFailure -> {
                 next(model.validationFailed(event.errors))
