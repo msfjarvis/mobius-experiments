@@ -23,6 +23,9 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffects> {
             LoginEvent.PasswordEntered -> {
                 next(model.clearPasswordError())
             }
+            is LoginEvent.LoginSuccess -> {
+                dispatch(Effects.effects(LoginEffects.SaveAuthToken(event.authToken), LoginEffects.OpenProfileScreen))
+            }
         }
     }
 }

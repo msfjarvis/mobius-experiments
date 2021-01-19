@@ -81,4 +81,20 @@ class LoginUpdateTest {
                 hasNoEffects(),
             ))
     }
+
+    @Test
+    fun `when login succeeds, then save auth token and open profile screen`() {
+        val model = initialModel
+            .enteredCredentials(username = "simple", password = "simple")
+            .loginInProgress()
+        val authToken = "auth_token"
+
+        updateSpec
+            .given(model)
+            .whenEvent(LoginEvent.LoginSuccess(authToken))
+            .then(assertThatNext(
+                hasNoModel(),
+                hasEffects(LoginEffects.SaveAuthToken(authToken), LoginEffects.OpenProfileScreen)
+            ))
+    }
 }
