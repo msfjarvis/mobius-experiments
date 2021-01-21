@@ -4,8 +4,11 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.doThrow
 import dev.msfjarvis.mobius.EffectHandlerTestCase
 import dev.msfjarvis.mobius.TestSchedulerProvider
+import org.junit.After
+import org.junit.Ignore
 import org.junit.Test
 
 class LoginEffectHandlerTest {
@@ -15,6 +18,11 @@ class LoginEffectHandlerTest {
     private val loginApi = mock<LoginApi>()
     private val effectHandler = LoginEffectHandler(loginUiActions, loginApi, scheduler).create()
     private val effectHandlerTestCase = EffectHandlerTestCase(effectHandler)
+
+    @After
+    fun tearDown() {
+        effectHandlerTestCase.dispose()
+    }
 
     @Test
     fun `when show error effect is received, then show error`() {
@@ -81,5 +89,21 @@ class LoginEffectHandlerTest {
 
         // then
         effectHandlerTestCase.assertOutgoingEvents(LoginEvent.LoginSuccess(authToken))
+    }
+
+    @Test
+    @Ignore("RXJava is hard")
+    fun `when login failure event is received, then show error`() {
+        // given
+        val username = Username("simple")
+        val password = Password("simple")
+
+        whenever(loginApi.login(username, password)).doThrow(Throwable("login failure"))
+
+        // when
+        effectHandlerTestCase.dispatch(LoginEffects.LoginUser(username, password))
+
+        // then
+        effectHandlerTestCase.assertOutgoingEvents(LoginEvent.LoginFailure)
     }
 }
