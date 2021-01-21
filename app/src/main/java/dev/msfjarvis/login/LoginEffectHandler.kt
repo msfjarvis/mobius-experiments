@@ -19,6 +19,11 @@ class LoginEffectHandler(
             .addConsumer(LoginEffects.ShowCredentialErrors::class.java, {
                 uiActions.showCredentialErrors(it.errors)
             }, schedulerProvider.main)
+            .addAction(
+                LoginEffects.OpenProfileScreen::class.java,
+                uiActions::navigateToProfilePage,
+                schedulerProvider.main,
+            )
             .build()
     }
 

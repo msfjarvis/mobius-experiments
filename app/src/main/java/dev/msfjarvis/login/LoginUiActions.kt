@@ -6,4 +6,7 @@ open class LoginUiActions {
 
     open fun showCredentialErrors(errors: List<ValidationError>) {
     }
+
+    open fun navigateToProfilePage() {
+    }
 }

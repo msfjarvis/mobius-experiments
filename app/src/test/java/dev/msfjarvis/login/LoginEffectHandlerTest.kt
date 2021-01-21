@@ -53,4 +53,15 @@ class LoginEffectHandlerTest {
         verify(loginUiActions).showCredentialErrors(validationErrors)
         verifyNoMoreInteractions(loginUiActions)
     }
+
+    @Test
+    fun `when open profile page effect is receive, then navigate to profile page`() {
+        // when
+        effectHandlerTestCase.dispatch(LoginEffects.OpenProfileScreen)
+
+        // then
+        effectHandlerTestCase.assertNoOutgoingEvents()
+        verify(loginUiActions).navigateToProfilePage()
+        verifyNoMoreInteractions(loginUiActions)
+    }
 }
