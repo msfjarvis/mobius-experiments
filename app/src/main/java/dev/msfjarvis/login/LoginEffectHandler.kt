@@ -3,11 +3,11 @@ package dev.msfjarvis.login
 import com.spotify.mobius.rx2.RxMobius
 import dev.msfjarvis.mobius.SchedulerProvider
 import io.reactivex.ObservableTransformer
-import kotlin.math.log
 
 class LoginEffectHandler(
     private val uiActions: LoginUiActions,
     private val loginApi: LoginApi,
+    private val preferences: Preferences,
     private val schedulerProvider: SchedulerProvider,
 ) {
 
@@ -27,6 +27,9 @@ class LoginEffectHandler(
                 schedulerProvider.main,
             )
             .addTransformer(LoginEffects.LoginUser::class.java, loginUser())
+            .addConsumer(LoginEffects.SaveAuthToken::class.java, {
+                preferences.putString("oauth_token", it.authToken.token)
+            }, schedulerProvider.io)
             .build()
     }
 

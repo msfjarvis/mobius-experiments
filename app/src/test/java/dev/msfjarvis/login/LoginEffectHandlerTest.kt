@@ -16,7 +16,8 @@ class LoginEffectHandlerTest {
     private val scheduler = TestSchedulerProvider()
     private val loginUiActions = mock<LoginUiActions>()
     private val loginApi = mock<LoginApi>()
-    private val effectHandler = LoginEffectHandler(loginUiActions, loginApi, scheduler).create()
+    private val preferences = mock<Preferences>()
+    private val effectHandler = LoginEffectHandler(loginUiActions, loginApi, preferences, scheduler).create()
     private val effectHandlerTestCase = EffectHandlerTestCase(effectHandler)
 
     @After
@@ -105,5 +106,19 @@ class LoginEffectHandlerTest {
 
         // then
         effectHandlerTestCase.assertOutgoingEvents(LoginEvent.LoginFailure)
+    }
+
+    @Test
+    fun `when save auth token effect is received, then persist token to storage`() {
+        // given
+        val authToken = OAuthToken("authentication-token")
+
+        // when
+        effectHandlerTestCase.dispatch(LoginEffects.SaveAuthToken(authToken))
+
+        // then
+        effectHandlerTestCase.assertNoOutgoingEvents()
+        verify(preferences).putString("oauth_token", authToken.token)
+        verifyNoMoreInteractions(preferences)
     }
 }
