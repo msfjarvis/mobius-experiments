@@ -16,6 +16,9 @@ class LoginViewRenderer(
                 is ValidationError.InvalidUsername -> {
                     loginUi.showUsernameError()
                 }
+                is ValidationError.InvalidPassword -> {
+                    loginUi.showPasswordError()
+                }
             }
         }
     }

@@ -38,4 +38,20 @@ class LoginViewRendererTest {
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
     }
+
+    @Test
+    fun `when password validation fails, then show error message`() {
+        // given
+        val validationErrors = listOf(ValidationError.InvalidPassword)
+        val model = LoginModel.default().validationFailed(validationErrors)
+
+        // when
+        viewRenderer.render(model)
+
+        // then
+        verify(loginUi).hideProgressView()
+        verify(loginUi).showLoginButton()
+        verify(loginUi).showPasswordError()
+        verifyNoMoreInteractions(loginUi)
+    }
 }

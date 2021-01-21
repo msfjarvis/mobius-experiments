@@ -10,4 +10,6 @@ interface LoginUi {
     fun hideProgressView()
 
     fun showLoginButton()
+
+    fun showPasswordError()
 }
