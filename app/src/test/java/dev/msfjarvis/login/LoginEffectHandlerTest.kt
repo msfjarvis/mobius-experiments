@@ -3,6 +3,7 @@ package dev.msfjarvis.login
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import dev.msfjarvis.mobius.EffectHandlerTestCase
 import dev.msfjarvis.mobius.TestSchedulerProvider
 import org.junit.Test
@@ -11,7 +12,8 @@ class LoginEffectHandlerTest {
 
     private val scheduler = TestSchedulerProvider()
     private val loginUiActions = mock<LoginUiActions>()
-    private val effectHandler = LoginEffectHandler(loginUiActions, scheduler).create()
+    private val loginApi = mock<LoginApi>()
+    private val effectHandler = LoginEffectHandler(loginUiActions, loginApi, scheduler).create()
     private val effectHandlerTestCase = EffectHandlerTestCase(effectHandler)
 
     @Test
@@ -63,5 +65,21 @@ class LoginEffectHandlerTest {
         effectHandlerTestCase.assertNoOutgoingEvents()
         verify(loginUiActions).navigateToProfilePage()
         verifyNoMoreInteractions(loginUiActions)
+    }
+
+    @Test
+    fun `when login user effect is received, then make an API call`() {
+        // given
+        val username = Username("simple")
+        val password = Password("simple")
+        val authToken = OAuthToken("authentication-token")
+
+        whenever(loginApi.login(username, password)).thenReturn(authToken)
+
+        // when
+        effectHandlerTestCase.dispatch(LoginEffects.LoginUser(username, password))
+
+        // then
+        effectHandlerTestCase.assertOutgoingEvents(LoginEvent.LoginSuccess(authToken))
     }
 }

@@ -3,9 +3,11 @@ package dev.msfjarvis.login
 import com.spotify.mobius.rx2.RxMobius
 import dev.msfjarvis.mobius.SchedulerProvider
 import io.reactivex.ObservableTransformer
+import kotlin.math.log
 
 class LoginEffectHandler(
     private val uiActions: LoginUiActions,
+    private val loginApi: LoginApi,
     private val schedulerProvider: SchedulerProvider,
 ) {
 
@@ -24,7 +26,16 @@ class LoginEffectHandler(
                 uiActions::navigateToProfilePage,
                 schedulerProvider.main,
             )
+            .addTransformer(LoginEffects.LoginUser::class.java, loginUser())
             .build()
+    }
+
+    private fun loginUser(): ObservableTransformer<LoginEffects.LoginUser, LoginEvent> {
+        return ObservableTransformer { effects ->
+            effects
+                .map { loginApi.login(it.username, it.password) }
+                .map { LoginEvent.LoginSuccess(it) }
+        }
     }
 
     private fun validateCredentials(): ObservableTransformer<LoginEffects.ValidateCredentials, LoginEvent> {
