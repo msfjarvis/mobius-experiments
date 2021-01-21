@@ -89,7 +89,7 @@ class LoginUpdateTest {
         val model = initialModel
             .enteredCredentials(username = validUsername, password = validPassword)
             .loginInProgress()
-        val authToken = "auth_token"
+        val authToken = OAuthToken("auth_token")
 
         updateSpec
             .given(model)

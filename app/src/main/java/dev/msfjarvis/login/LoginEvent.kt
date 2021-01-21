@@ -5,6 +5,6 @@ sealed class LoginEvent {
     data class ValidationResult(val errors: List<ValidationError>) : LoginEvent()
     object UsernameEntered : LoginEvent()
     object PasswordEntered : LoginEvent()
-    data class LoginSuccess(val authToken: String) : LoginEvent()
+    data class LoginSuccess(val authToken: OAuthToken) : LoginEvent()
     object LoginFailure: LoginEvent()
 }
