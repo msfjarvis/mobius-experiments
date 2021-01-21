@@ -4,7 +4,19 @@ class LoginViewRenderer(
     private val loginUi: LoginUi,
 ) {
     fun render(model: LoginModel) {
-        loginUi.hideLoginButton()
-        loginUi.showProgressView()
+        if (model.loginInProgress) {
+            loginUi.hideLoginButton()
+            loginUi.showProgressView()
+        } else {
+            loginUi.showLoginButton()
+            loginUi.hideProgressView()
+        }
+        model.validationErrors.forEach {
+            when (it) {
+                is ValidationError.InvalidUsername -> {
+                    loginUi.showUsernameError()
+                }
+            }
+        }
     }
 }

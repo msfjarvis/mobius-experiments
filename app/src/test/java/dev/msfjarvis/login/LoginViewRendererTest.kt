@@ -22,4 +22,20 @@ class LoginViewRendererTest {
         verify(loginUi).showProgressView()
         verifyNoMoreInteractions(loginUi)
     }
+
+    @Test
+    fun `when username validation fails, then show error message`() {
+        // given
+        val validationErrors = listOf(ValidationError.InvalidUsername)
+        val model = LoginModel.default().validationFailed(validationErrors)
+
+        // when
+        viewRenderer.render(model)
+
+        // then
+        verify(loginUi).hideProgressView()
+        verify(loginUi).showLoginButton()
+        verify(loginUi).showUsernameError()
+        verifyNoMoreInteractions(loginUi)
+    }
 }
