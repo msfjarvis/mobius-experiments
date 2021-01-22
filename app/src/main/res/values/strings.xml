@@ -3,4 +3,7 @@
     <string name="decrement_button_label">Decrement</string>
     <string name="increment_button_label">Increment</string>
     <string name="error_decrement_below_zero">Cannot decrement below zero</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
