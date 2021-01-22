@@ -71,4 +71,24 @@ class LoginViewRendererTest {
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
     }
+
+    @Test
+    fun `when username is entered, then clear username errors`() {
+        // given
+        val validationErrors = listOf(ValidationError.InvalidPassword, ValidationError.InvalidUsername)
+        val model = LoginModel.default()
+            .validationFailed(validationErrors)
+            .enteredCredentials(Username("valid"), Password.BLANK)
+            .clearUsernameError()
+
+        // when
+        viewRenderer.render(model)
+
+        // then
+        verify(loginUi).hideProgressView()
+        verify(loginUi).showLoginButton()
+        verify(loginUi).clearUsernameError()
+        verify(loginUi).showPasswordError()
+        verifyNoMoreInteractions(loginUi)
+    }
 }
