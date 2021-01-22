@@ -16,7 +16,7 @@ class LoginUpdateTest {
     fun `when login button is clicked, then validate credentials`() {
         updateSpec
             .given(initialModel)
-            .whenEvent(LoginEvent.LoginButtonClicked)
+            .whenEvent(LoginEvent.LoginButtonClicked(validUsername, validPassword))
             .then(assertThatNext(
                 hasModel(initialModel.loginInProgress()),
                 hasEffects(LoginEffect.ValidateCredentials(initialModel.username, initialModel.password)),

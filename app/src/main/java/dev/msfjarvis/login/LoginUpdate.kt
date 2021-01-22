@@ -7,8 +7,8 @@ import com.spotify.mobius.Update
 class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffect> {
     override fun update(model: LoginModel, event: LoginEvent): Next<LoginModel, LoginEffect> {
         return when (event) {
-            LoginEvent.LoginButtonClicked -> {
-                next(model.loginInProgress(), setOf(LoginEffect.ValidateCredentials(model.username, model.password)))
+            is LoginEvent.LoginButtonClicked -> {
+                next(model.loginInProgress(), setOf(LoginEffect.ValidateCredentials(event.username, event.password)))
             }
             is LoginEvent.ValidationResult -> {
                 if (event.errors.isEmpty())
