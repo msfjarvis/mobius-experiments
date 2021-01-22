@@ -6,5 +6,6 @@ sealed class LoginEffect {
     data class SaveAuthToken(val authToken: OAuthToken) : LoginEffect()
     object OpenProfileScreen : LoginEffect()
     object ShowLoginError : LoginEffect()
-    data class ShowCredentialErrors(val errors: List<ValidationError>) : LoginEffect()
+    object ClearUsernameError : LoginEffect()
+    object ClearPasswordError : LoginEffect()
 }

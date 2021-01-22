@@ -11,9 +11,6 @@ class LoginViewRenderer(
             loginUi.showLoginButton()
             loginUi.hideProgressView()
         }
-        // We clear errors pre-emptively and then set them again if they are present
-        loginUi.clearUsernameError()
-        loginUi.clearPasswordError()
         model.validationErrors.forEach {
             when (it) {
                 is ValidationError.InvalidUsername -> {

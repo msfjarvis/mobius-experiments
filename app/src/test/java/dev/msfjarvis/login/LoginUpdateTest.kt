@@ -65,7 +65,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.UsernameEntered)
             .then(assertThatNext(
                 hasModel(model.clearUsernameError()),
-                hasNoEffects(),
+                hasEffects(LoginEffect.ClearUsernameError),
             ))
     }
 
@@ -80,7 +80,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.PasswordEntered)
             .then(assertThatNext(
                 hasModel(model.clearPasswordError()),
-                hasNoEffects(),
+                hasEffects(LoginEffect.ClearPasswordError),
             ))
     }
 

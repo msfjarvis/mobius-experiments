@@ -20,8 +20,6 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideLoginButton()
         verify(loginUi).showProgressView()
-        verify(loginUi).clearUsernameError()
-        verify(loginUi).clearPasswordError()
         verifyNoMoreInteractions(loginUi)
     }
 
@@ -37,8 +35,6 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
-        verify(loginUi).clearUsernameError()
-        verify(loginUi).clearPasswordError()
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
     }
@@ -55,8 +51,6 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
-        verify(loginUi).clearUsernameError()
-        verify(loginUi).clearPasswordError()
         verify(loginUi).showPasswordError()
         verifyNoMoreInteractions(loginUi)
     }
@@ -73,8 +67,6 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
-        verify(loginUi).clearUsernameError()
-        verify(loginUi).clearPasswordError()
         verify(loginUi).showPasswordError()
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
@@ -95,8 +87,6 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
-        verify(loginUi).clearUsernameError()
-        verify(loginUi).clearPasswordError()
         verify(loginUi).showPasswordError()
         verifyNoMoreInteractions(loginUi)
     }
@@ -116,8 +106,6 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
-        verify(loginUi).clearUsernameError()
-        verify(loginUi).clearPasswordError()
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
     }

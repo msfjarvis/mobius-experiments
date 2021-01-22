@@ -52,20 +52,6 @@ class LoginEffectHandlerTest {
     }
 
     @Test
-    fun `when credential validation fails, then show errors`() {
-        // given
-        val validationErrors = listOf(ValidationError.InvalidUsername, ValidationError.InvalidPassword)
-
-        // when
-        effectHandlerTestCase.dispatch(LoginEffect.ShowCredentialErrors(validationErrors))
-
-        // then
-        effectHandlerTestCase.assertNoOutgoingEvents()
-        verify(loginUiActions).showCredentialErrors(validationErrors)
-        verifyNoMoreInteractions(loginUiActions)
-    }
-
-    @Test
     fun `when open profile page effect is receive, then navigate to profile page`() {
         // when
         effectHandlerTestCase.dispatch(LoginEffect.OpenProfileScreen)
@@ -120,5 +106,31 @@ class LoginEffectHandlerTest {
         effectHandlerTestCase.assertNoOutgoingEvents()
         verify(preferences).putString("oauth_token", authToken.token)
         verifyNoMoreInteractions(preferences)
+    }
+
+    @Test
+    fun `when username error clear effect is received, then clear username error`() {
+        // given
+
+        // when
+        effectHandlerTestCase.dispatch(LoginEffect.ClearUsernameError)
+
+        // then
+        effectHandlerTestCase.assertNoOutgoingEvents()
+        verify(loginUiActions).clearUsernameError()
+        verifyNoMoreInteractions(loginUiActions)
+    }
+
+    @Test
+    fun `when password error clear effect is received, then clear password error`() {
+        // given
+
+        // when
+        effectHandlerTestCase.dispatch(LoginEffect.ClearPasswordError)
+
+        // then
+        effectHandlerTestCase.assertNoOutgoingEvents()
+        verify(loginUiActions).clearPasswordError()
+        verifyNoMoreInteractions(loginUiActions)
     }
 }

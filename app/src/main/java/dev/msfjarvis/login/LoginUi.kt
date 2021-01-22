@@ -12,8 +12,4 @@ interface LoginUi {
     fun showLoginButton()
 
     fun showPasswordError()
-
-    fun clearUsernameError()
-
-    fun clearPasswordError()
 }

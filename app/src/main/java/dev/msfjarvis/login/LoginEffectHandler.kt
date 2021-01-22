@@ -18,9 +18,6 @@ class LoginEffectHandler(
                 uiActions::showLoginErrorToastMessage
             )
             .addTransformer(LoginEffect.ValidateCredentials::class.java, validateCredentials())
-            .addConsumer(LoginEffect.ShowCredentialErrors::class.java, {
-                uiActions.showCredentialErrors(it.errors)
-            }, schedulerProvider.main)
             .addAction(
                 LoginEffect.OpenProfileScreen::class.java,
                 uiActions::navigateToProfilePage,
@@ -30,6 +27,12 @@ class LoginEffectHandler(
             .addConsumer(LoginEffect.SaveAuthToken::class.java, {
                 preferences.putString("oauth_token", it.authToken.token)
             }, schedulerProvider.io)
+            .addAction(LoginEffect.ClearUsernameError::class.java, {
+                uiActions.clearUsernameError()
+            }, schedulerProvider.main)
+            .addAction(LoginEffect.ClearPasswordError::class.java, {
+                uiActions.clearPasswordError()
+            }, schedulerProvider.main)
             .build()
     }
 

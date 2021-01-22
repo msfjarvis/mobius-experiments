@@ -16,11 +16,11 @@ class LoginUpdate : Update<LoginModel, LoginEvent, LoginEffect> {
                 else
                     next(model.validationFailed(event.errors))
             }
-            LoginEvent.UsernameEntered -> {
-                next(model.clearUsernameError())
+            is LoginEvent.UsernameEntered -> {
+                next(model.clearUsernameError(), setOf(LoginEffect.ClearUsernameError))
             }
-            LoginEvent.PasswordEntered -> {
-                next(model.clearPasswordError())
+            is LoginEvent.PasswordEntered -> {
+                next(model.clearPasswordError(), setOf(LoginEffect.ClearPasswordError))
             }
             is LoginEvent.LoginSuccess -> {
                 dispatch(setOf(LoginEffect.SaveAuthToken(event.authToken), LoginEffect.OpenProfileScreen))
