@@ -1,11 +1,15 @@
 package dev.msfjarvis.login
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class LoginModel(
     val username: Username,
     val password: Password,
     val loginInProgress: Boolean,
     val validationErrors: List<ValidationError>,
-) {
+): Parcelable {
 
     fun loginInProgress(): LoginModel {
         return copy(loginInProgress = true)

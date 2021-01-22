@@ -1,6 +1,11 @@
 package dev.msfjarvis.login
 
-sealed class ValidationError {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+sealed class ValidationError : Parcelable {
+    @Parcelize
     object InvalidUsername : ValidationError()
+    @Parcelize
     object InvalidPassword : ValidationError()
 }

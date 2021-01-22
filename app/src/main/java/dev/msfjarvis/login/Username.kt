@@ -1,6 +1,10 @@
 package dev.msfjarvis.login
 
-data class Username(val username: String) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Username(val username: String): Parcelable {
     fun validate(): List<ValidationError> {
         return if (username.isEmpty()) {
             listOf(ValidationError.InvalidUsername)
