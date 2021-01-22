@@ -11,29 +11,29 @@ class LoginEffectHandler(
     private val schedulerProvider: SchedulerProvider,
 ) {
 
-    fun create(): ObservableTransformer<LoginEffects, LoginEvent> {
-        return RxMobius.subtypeEffectHandler<LoginEffects, LoginEvent>()
+    fun create(): ObservableTransformer<LoginEffect, LoginEvent> {
+        return RxMobius.subtypeEffectHandler<LoginEffect, LoginEvent>()
             .addAction(
-                LoginEffects.ShowLoginError::class.java,
+                LoginEffect.ShowLoginError::class.java,
                 uiActions::showLoginErrorToastMessage
             )
-            .addTransformer(LoginEffects.ValidateCredentials::class.java, validateCredentials())
-            .addConsumer(LoginEffects.ShowCredentialErrors::class.java, {
+            .addTransformer(LoginEffect.ValidateCredentials::class.java, validateCredentials())
+            .addConsumer(LoginEffect.ShowCredentialErrors::class.java, {
                 uiActions.showCredentialErrors(it.errors)
             }, schedulerProvider.main)
             .addAction(
-                LoginEffects.OpenProfileScreen::class.java,
+                LoginEffect.OpenProfileScreen::class.java,
                 uiActions::navigateToProfilePage,
                 schedulerProvider.main,
             )
-            .addTransformer(LoginEffects.LoginUser::class.java, loginUser())
-            .addConsumer(LoginEffects.SaveAuthToken::class.java, {
+            .addTransformer(LoginEffect.LoginUser::class.java, loginUser())
+            .addConsumer(LoginEffect.SaveAuthToken::class.java, {
                 preferences.putString("oauth_token", it.authToken.token)
             }, schedulerProvider.io)
             .build()
     }
 
-    private fun loginUser(): ObservableTransformer<LoginEffects.LoginUser, LoginEvent> {
+    private fun loginUser(): ObservableTransformer<LoginEffect.LoginUser, LoginEvent> {
         return ObservableTransformer { effects ->
             effects
                 .map { loginApi.login(it.username, it.password) }
@@ -41,7 +41,7 @@ class LoginEffectHandler(
         }
     }
 
-    private fun validateCredentials(): ObservableTransformer<LoginEffects.ValidateCredentials, LoginEvent> {
+    private fun validateCredentials(): ObservableTransformer<LoginEffect.ValidateCredentials, LoginEvent> {
         return ObservableTransformer { effect ->
             effect
                 .map { it.username.validate() + it.password.validate() }

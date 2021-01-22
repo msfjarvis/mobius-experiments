@@ -28,7 +28,7 @@ class LoginEffectHandlerTest {
     @Test
     fun `when show error effect is received, then show error`() {
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.ShowLoginError)
+        effectHandlerTestCase.dispatch(LoginEffect.ShowLoginError)
 
         // then
         effectHandlerTestCase.assertNoOutgoingEvents()
@@ -44,7 +44,7 @@ class LoginEffectHandlerTest {
         val validationErrors = listOf(ValidationError.InvalidUsername, ValidationError.InvalidPassword)
 
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.ValidateCredentials(username, password))
+        effectHandlerTestCase.dispatch(LoginEffect.ValidateCredentials(username, password))
 
         // then
         effectHandlerTestCase.assertOutgoingEvents(LoginEvent.ValidationResult(validationErrors))
@@ -57,7 +57,7 @@ class LoginEffectHandlerTest {
         val validationErrors = listOf(ValidationError.InvalidUsername, ValidationError.InvalidPassword)
 
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.ShowCredentialErrors(validationErrors))
+        effectHandlerTestCase.dispatch(LoginEffect.ShowCredentialErrors(validationErrors))
 
         // then
         effectHandlerTestCase.assertNoOutgoingEvents()
@@ -68,7 +68,7 @@ class LoginEffectHandlerTest {
     @Test
     fun `when open profile page effect is receive, then navigate to profile page`() {
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.OpenProfileScreen)
+        effectHandlerTestCase.dispatch(LoginEffect.OpenProfileScreen)
 
         // then
         effectHandlerTestCase.assertNoOutgoingEvents()
@@ -86,7 +86,7 @@ class LoginEffectHandlerTest {
         whenever(loginApi.login(username, password)).thenReturn(authToken)
 
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.LoginUser(username, password))
+        effectHandlerTestCase.dispatch(LoginEffect.LoginUser(username, password))
 
         // then
         effectHandlerTestCase.assertOutgoingEvents(LoginEvent.LoginSuccess(authToken))
@@ -102,7 +102,7 @@ class LoginEffectHandlerTest {
         whenever(loginApi.login(username, password)).doThrow(Throwable("login failure"))
 
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.LoginUser(username, password))
+        effectHandlerTestCase.dispatch(LoginEffect.LoginUser(username, password))
 
         // then
         effectHandlerTestCase.assertOutgoingEvents(LoginEvent.LoginFailure)
@@ -114,7 +114,7 @@ class LoginEffectHandlerTest {
         val authToken = OAuthToken("authentication-token")
 
         // when
-        effectHandlerTestCase.dispatch(LoginEffects.SaveAuthToken(authToken))
+        effectHandlerTestCase.dispatch(LoginEffect.SaveAuthToken(authToken))
 
         // then
         effectHandlerTestCase.assertNoOutgoingEvents()

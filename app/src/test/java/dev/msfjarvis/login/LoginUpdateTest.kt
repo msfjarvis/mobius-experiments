@@ -19,7 +19,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.LoginButtonClicked)
             .then(assertThatNext(
                 hasModel(initialModel.loginInProgress()),
-                hasEffects(LoginEffects.ValidateCredentials(initialModel.username, initialModel.password)),
+                hasEffects(LoginEffect.ValidateCredentials(initialModel.username, initialModel.password)),
             ))
     }
 
@@ -50,7 +50,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.ValidationResult(emptyList()))
             .then(assertThatNext(
                 hasNoModel(),
-                hasEffects(LoginEffects.LoginUser(username = validUsername, password = validPassword))
+                hasEffects(LoginEffect.LoginUser(username = validUsername, password = validPassword))
             ))
     }
 
@@ -96,7 +96,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.LoginSuccess(authToken))
             .then(assertThatNext(
                 hasNoModel(),
-                hasEffects(LoginEffects.SaveAuthToken(authToken), LoginEffects.OpenProfileScreen)
+                hasEffects(LoginEffect.SaveAuthToken(authToken), LoginEffect.OpenProfileScreen)
             ))
     }
 
@@ -111,7 +111,7 @@ class LoginUpdateTest {
             .whenEvent(LoginEvent.LoginFailure)
             .then(assertThatNext(
                 hasModel(model.loginCompleted()),
-                hasEffects(LoginEffects.ShowLoginError)
+                hasEffects(LoginEffect.ShowLoginError)
             ))
     }
 }
