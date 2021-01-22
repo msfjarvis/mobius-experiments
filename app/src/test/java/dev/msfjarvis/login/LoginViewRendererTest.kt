@@ -20,6 +20,8 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideLoginButton()
         verify(loginUi).showProgressView()
+        verify(loginUi).clearUsernameError()
+        verify(loginUi).clearPasswordError()
         verifyNoMoreInteractions(loginUi)
     }
 
@@ -35,6 +37,8 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
+        verify(loginUi).clearUsernameError()
+        verify(loginUi).clearPasswordError()
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
     }
@@ -51,6 +55,8 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
+        verify(loginUi).clearUsernameError()
+        verify(loginUi).clearPasswordError()
         verify(loginUi).showPasswordError()
         verifyNoMoreInteractions(loginUi)
     }
@@ -67,6 +73,8 @@ class LoginViewRendererTest {
         // then
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
+        verify(loginUi).clearUsernameError()
+        verify(loginUi).clearPasswordError()
         verify(loginUi).showPasswordError()
         verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
@@ -88,7 +96,29 @@ class LoginViewRendererTest {
         verify(loginUi).hideProgressView()
         verify(loginUi).showLoginButton()
         verify(loginUi).clearUsernameError()
+        verify(loginUi).clearPasswordError()
         verify(loginUi).showPasswordError()
+        verifyNoMoreInteractions(loginUi)
+    }
+
+    @Test
+    fun `when password is entered, the clear password errors`() {
+        // given
+        val validationErrors = listOf(ValidationError.InvalidPassword, ValidationError.InvalidUsername)
+        val model = LoginModel.default()
+            .validationFailed(validationErrors)
+            .enteredCredentials(Username.BLANK, Password("valid"))
+            .clearPasswordError()
+
+        // when
+        viewRenderer.render(model)
+
+        // then
+        verify(loginUi).hideProgressView()
+        verify(loginUi).showLoginButton()
+        verify(loginUi).clearUsernameError()
+        verify(loginUi).clearPasswordError()
+        verify(loginUi).showUsernameError()
         verifyNoMoreInteractions(loginUi)
     }
 }
